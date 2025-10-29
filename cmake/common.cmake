@@ -1,0 +1,8 @@
+macro(append_libraries LIST_TO_APPEND)
+    set(OPTIONAL_ARGS "${ARGN}")
+    foreach(ARG IN LISTS OPTIONAL_ARGS)
+        if (ARG)
+            set(${LIST_TO_APPEND} ${${LIST_TO_APPEND}} ${ARG})
+        endif()
+    endforeach()
+endmacro(append_libraries)
