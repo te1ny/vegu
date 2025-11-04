@@ -1,6 +1,16 @@
-#include <iostream>
-using namespace std;
+#include <QApplication>
+
+#include "main_window.hpp"
+#include "action_manager.hpp"
 
 int main(int argc, char** argv) {
-    return 0;
+    QApplication a(argc, argv);
+
+    MainWindow window;
+    window.show();
+
+    // Maybe add threads for save/load svg
+
+    int error = a.exec();
+    return error;
 }
