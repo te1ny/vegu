@@ -1,8 +1,0 @@
-#ifndef SCENE_OBJECT_PROPERTIES_HPP
-#define SCENE_OBJECT_PROPERTIES_HPP
-
-struct SceneObjectProperties {
-
-};
-
-#endif // SCENE_OBJECT_PROPERTIES_HPP

@@ -1,5 +1,6 @@
 #include "action_manager.hpp"
 #include <functional>
+#include <stack>
 
 const std::string NO_ACTION = "No action";
 
@@ -14,8 +15,7 @@ void ActionManager::add(const std::string& undoName,
                         std::function<void()> redo)
 {
     mUndo.emplace(undoName, redoName, std::move(undo), std::move(redo));
-    while (!mRedo.empty())
-        mRedo.pop();
+    mRedo = std::stack<Action>();
 }
 
 const std::string& ActionManager::getUndoName() const {

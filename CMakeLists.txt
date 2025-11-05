@@ -7,6 +7,7 @@ project(vegu
 include(cmake/common.cmake)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(nlohmann_json REQUIRED COMPOMENTS nlohmann_json)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)

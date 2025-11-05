@@ -1,7 +1,6 @@
 #include <QApplication>
 
 #include "main_window.hpp"
-#include "action_manager.hpp"
 
 int main(int argc, char** argv) {
     QApplication a(argc, argv);
