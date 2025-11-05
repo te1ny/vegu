@@ -1,6 +1,5 @@
 #include "action_manager.hpp"
 #include <functional>
-#include <stack>
 
 const std::string NO_ACTION = "No action";
 

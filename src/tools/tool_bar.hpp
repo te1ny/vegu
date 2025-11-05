@@ -2,20 +2,25 @@
 #define TOOL_BAR_HPP
 
 #include <QToolBar>
+#include <QAction>
+#include <QString>
+#include <QMap>
 
 #include "tool.hpp"
-#include "../viewport/viewport.hpp"
 
 class ToolBar : public QToolBar {
-public:
-    void setViewport(Viewport* viewport);
+    Q_OBJECT
 
+public:
     ToolBar(QWidget* parent = nullptr);
 
-private:
-    void addToolButton(Tool* tool, const QString& name, const QIcon& icon);
+signals:
+    void toolChanged(Tool* tool);
 
-    Tool* mCurrentTool;
+private:
+    void addTool(const QString& toolName);
+
+    QMap<QString, Tool*> mTools;
 };
 
 #endif // TOOL_BAR_HPP

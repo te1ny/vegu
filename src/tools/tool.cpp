@@ -1,9 +1,9 @@
 #include "tool.hpp"
 
-#include "../viewport/viewport.hpp"
+QAction* Tool::action() {
+    return mAction;
+}
 
-Tool::Tool(Viewport* viewport)
-    : mViewport(viewport)
-    , mScene(dynamic_cast<Scene*>(viewport->scene()))
-{
+Tool::Tool(const QString& name) {
+    mAction = new QAction(QIcon("src/tools/icons/" + name.toLower() + "_tool.png"), name);
 }

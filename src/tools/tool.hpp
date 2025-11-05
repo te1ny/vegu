@@ -1,28 +1,19 @@
 #ifndef TOOL_HPP
 #define TOOL_HPP
 
-#include <QObject>
-#include <QMouseEvent>
+#include <QString>
+#include <QIcon>
+#include <QAction>
 
-#include "../scene/scene.hpp"
-
-class Viewport;
-
-class Tool : public QObject {
+class Tool {
 public:
-    virtual void activate() {}
-    virtual void deactivate() {}
+    QAction* action();
 
-    virtual void mousePressEvent(QMouseEvent* event) {}
-    virtual void mouseMoveEvent(QMouseEvent* event) {}
-    virtual void mouseReleaseEvent(QMouseEvent* event) {}
-
-    Tool(Viewport* viewport);
+    Tool(const QString& name);
     virtual ~Tool() = default;
 
-protected:
-    Viewport* mViewport;
-    Scene* mScene;
+private:
+    QAction* mAction;
 };
 
 #endif // TOOL_HPP

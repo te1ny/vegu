@@ -3,11 +3,7 @@
 
 #include <QMainWindow>
 
-#include "scene/scene.hpp"
-#include "scene/scene_tree.hpp"
-#include "inspector/inspector.hpp"
 #include "tools/tool_bar.hpp"
-#include "viewport/viewport.hpp"
 
 namespace Ui {
     class MainWindow;
@@ -19,11 +15,7 @@ public:
     ~MainWindow();
 
 private:
-    Scene* mScene;
-    SceneTree* mSceneTree;
-    Inspector* mInspector;
-    Viewport* mViewport;
-    ToolBar* mToolBar;
+    ToolBar* mToolBar; 
 
     Ui::MainWindow* mUi;
 };

@@ -8,8 +8,6 @@ int main(int argc, char** argv) {
     MainWindow window;
     window.show();
 
-    // Maybe add threads for save/load svg
-
     int error = a.exec();
     return error;
 }
