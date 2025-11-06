@@ -4,11 +4,14 @@
 
 #include "rectangle_tool.hpp"
 
+void ToolBar::changeTool(const QString& toolName) {
+    mTools[toolName]->action()->trigger();
+}
+
+
 ToolBar::ToolBar(QWidget* parent)
     : QToolBar(parent)
 {
-    setOrientation(Qt::Orientation::Vertical);
-
     mTools["Rectangle"] = new RectangleTool(QString("Rectangle"));
     mTools["Circle"] = new RectangleTool(QString("Circle"));
     mTools["Ellipse"] = new RectangleTool(QString("Ellipse"));

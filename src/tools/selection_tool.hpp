@@ -1,13 +1,13 @@
-#ifndef RECTANGLE_TOOL_HPP
-#define RECTANGLE_TOOL_HPP
+#ifndef SELECTION_TOOL_HPP
+#define SELECTION_TOOL_HPP
 
 #include "tool.hpp"
 
-class RectangleTool : public Tool {
+class SelectionTool : public Tool {
     using Tool::Tool;
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
 }; 
 
-#endif // RECTANGLE_TOOL_HPP
+#endif // SELECTION_TOOL_HPP

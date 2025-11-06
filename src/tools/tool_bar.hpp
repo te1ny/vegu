@@ -12,6 +12,8 @@ class ToolBar : public QToolBar {
     Q_OBJECT
 
 public:
+    void changeTool(const QString& toolName);
+
     ToolBar(QWidget* parent = nullptr);
 
 signals:
