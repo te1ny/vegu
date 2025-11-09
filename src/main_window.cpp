@@ -4,6 +4,8 @@
 #include <QHBoxLayout>
 
 #include "tools/tool_bar.hpp"
+#include "canvas/canvas.hpp"
+#include "canvas/canvas_view.hpp"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -20,11 +22,14 @@ MainWindow::MainWindow(QWidget* parent)
     QHBoxLayout* layout = new QHBoxLayout(centralWidget);
     layout->setContentsMargins(0, 0, 0 ,0);
 
-    //mViewport = new Viewport(this);
-    //layout->addWidget(mViewport);
-    //connect(mToolBar, &ToolBar::toolChanged, mViewport, &Viewport::onToolChanged);
+    mCanvas = new Canvas(this);
+    mCanvasView = new CanvasView(this);
+    mCanvasView->setCanvas(mCanvas);
+    layout->addWidget(mCanvasView);
+    connect(mToolBar, &ToolBar::toolChanged, mCanvasView, &CanvasView::onToolChanged);
 
     mToolBar->changeTool("Line");
+    mToolBar->setCanvasView(mCanvasView);
 }
 
 MainWindow::~MainWindow() {

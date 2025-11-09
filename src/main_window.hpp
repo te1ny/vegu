@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 class ToolBar;
+class Canvas;
 class CanvasView;
 
 namespace Ui {
@@ -17,7 +18,8 @@ public:
 
 private:
     ToolBar* mToolBar; 
-    CanvasView* mCanvas;
+    Canvas* mCanvas;
+    CanvasView* mCanvasView;
 
     Ui::MainWindow* mUi;
 };

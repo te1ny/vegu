@@ -8,11 +8,14 @@
 
 #include "tool.hpp"
 
+class CanvasVies;
+
 class ToolBar : public QToolBar {
     Q_OBJECT
 
 public:
     void changeTool(const QString& toolName);
+    void setCanvasView(CanvasView* canvasView);
 
     ToolBar(QWidget* parent = nullptr);
 
