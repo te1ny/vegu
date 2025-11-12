@@ -6,11 +6,9 @@
 #include <QBrush>
 #include <fstream>
 #include <QTransform>
-#include <qgraphicsitem.h>
 
 namespace {
 
-// Вспомогательные функции
 void applyCommonProperties(QGraphicsItem* item, const toml::table& table);
 QColor colorFromTomlArray(const toml::array* arr);
 toml::array colorToTomlArray(const QColor& color);
@@ -18,12 +16,11 @@ void applyPenProperties(QPen& pen, const toml::table& table);
 void applyBrushProperties(QBrush& brush, const toml::table& table);
 void applyTransform(QGraphicsItem* item, const toml::table& table);
 
-// Функции для создания элементов
 QGraphicsItem* createRectFromTable(const toml::table& table);
 QGraphicsItem* createEllipseFromTable(const toml::table& table);
 QGraphicsItem* createLineFromTable(const toml::table& table);
 
-} // namespace
+}
 
 void CanvasLoader::saveToToml(Canvas* canvas, const QString& fileName) {
     toml::table root;
@@ -153,13 +150,11 @@ toml::table CanvasLoader::lineToTable(QGraphicsLineItem* item) {
 toml::table CanvasLoader::itemToTable(QGraphicsItem* item) {
     toml::table table;
     
-    // Базовые свойства
     table.insert("pos_x", item->pos().x());
     table.insert("pos_y", item->pos().y());
     table.insert("z_value", item->zValue());
     table.insert("flags", static_cast<int>(item->flags()));
     
-    // Трансформация
     const QTransform transform = item->transform();
     table.insert("transform_m11", transform.m11());
     table.insert("transform_m12", transform.m12());
@@ -171,7 +166,6 @@ toml::table CanvasLoader::itemToTable(QGraphicsItem* item) {
     table.insert("transform_m32", transform.m32());
     table.insert("transform_m33", transform.m33());
     
-    // Свойства пера и кисти
     if (auto shapeItem = dynamic_cast<QAbstractGraphicsShapeItem*>(item)) {
         saveShapeProperties(shapeItem, table);
     } else if (auto lineItem = dynamic_cast<QGraphicsLineItem*>(item)) {
@@ -182,15 +176,12 @@ toml::table CanvasLoader::itemToTable(QGraphicsItem* item) {
 }
 
 void CanvasLoader::saveShapeProperties(QAbstractGraphicsShapeItem* item, toml::table& table) {
-    // Сохраняем стиль кисти
     table.insert("brush_style", static_cast<int>(item->brush().style()));
     
-    // Сохраняем цвет кисти, если стиль не NoBrush
     if (item->brush().style() != Qt::NoBrush) {
         table.insert("fill_color", colorToTomlArray(item->brush().color()));
     }
 
-    // Перо
     savePenProperties(item->pen(), table);
 }
 
@@ -208,10 +199,7 @@ void CanvasLoader::savePenProperties(const QPen& pen, toml::table& table) {
 
 namespace {
 
-// Реализации вспомогательных функций
-
 void applyCommonProperties(QGraphicsItem* item, const toml::table& table) {
-    // Позиция
     if (auto pos_x = table.get("pos_x")) {
         if (auto pos_y = table.get("pos_y")) {
             item->setPos(pos_x->as_floating_point()->get(), 
@@ -219,25 +207,21 @@ void applyCommonProperties(QGraphicsItem* item, const toml::table& table) {
         }
     }
     
-    // Z-value
     if (auto z_value = table.get("z_value")) {
         item->setZValue(z_value->as_floating_point()->get());
     }
     
-    // Трансформация
     applyTransform(item, table);
     
-    // Флаги
     if (auto flags = table.get("flags")) {
         item->setFlags(static_cast<QGraphicsItem::GraphicsItemFlags>(
             static_cast<int>(flags->as_integer()->get())));
     }
 
-    // Свойства пера и кисти
     if (auto shapeItem = dynamic_cast<QAbstractGraphicsShapeItem*>(item)) {
         QBrush brush = shapeItem->brush();
         applyBrushProperties(brush, table);
-        shapeItem->setBrush(brush);  // Важно: устанавливаем кисть обратно!
+        shapeItem->setBrush(brush);
         
         QPen pen = shapeItem->pen();
         applyPenProperties(pen, table);
@@ -290,12 +274,10 @@ void applyPenProperties(QPen& pen, const toml::table& table) {
 }
 
 void applyBrushProperties(QBrush& brush, const toml::table& table) {
-    // Восстанавливаем стиль кисти
     if (auto brush_style = table.get("brush_style")) {
         brush.setStyle(static_cast<Qt::BrushStyle>(brush_style->as_integer()->get()));
     }
     
-    // Восстанавливаем цвет кисти, если он есть
     if (auto fillColor = table.get("fill_color")) {
         if (auto arr = fillColor->as_array()) {
             brush.setColor(colorFromTomlArray(arr));
@@ -354,4 +336,4 @@ QGraphicsItem* createLineFromTable(const toml::table& table) {
     return new QGraphicsLineItem(line);
 }
 
-} // namespace
+}

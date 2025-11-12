@@ -9,13 +9,16 @@
 #include "canvas/canvas_view.hpp"
 #include "bars/menu_bar.hpp"
 #include "canvas/canvas_loader.hpp"
+#include "action_manager/action_manager.hpp"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , mUi(new Ui::MainWindow)
 {
     mUi->setupUi(this);
-    
+
+    ActionManager::instance(this);
+
     mToolBar = new ToolBar(this);
     addToolBar(Qt::ToolBarArea::LeftToolBarArea, mToolBar);
     

@@ -3,7 +3,6 @@
 
 #include <QRubberBand>
 #include <QPoint>
-#include <QGraphicsRectItem>
 
 #include "tool.hpp"
 

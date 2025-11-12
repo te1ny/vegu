@@ -1,15 +1,13 @@
 #include "canvas_view.hpp"
 
 #include <QRubberBand>
-#include <qbrush.h>
-#include <qnamespace.h>
 
 #include "canvas.hpp"
 #include "../tools/tool.hpp"
 
 void CanvasView::setCanvas(Canvas* canvas) {
     setScene(canvas);
-    scene()->setSceneRect(0, 0, 1000, 1000);
+    scene()->setSceneRect(0, 0, 600, 800);
 }
 
 void CanvasView::mousePressEvent(QMouseEvent* event) {
@@ -84,22 +82,10 @@ void CanvasView::onItemSelected(QGraphicsItem* item) {
     if (item->isSelected())
         return;
     item->setSelected(true);
-    /*
-    QGraphicsRectItem* selectionRect = new QGraphicsRectItem(item);
-    selectionRect->setRect(item->boundingRect());
-    
-    QPen pen(Qt::blue, 1, Qt::DashLine);
-    selectionRect->setPen(pen);
-    selectionRect->setBrush(Qt::NoBrush);
-    selectionRect->setFlag(QGraphicsItem::ItemIsSelectable, false);
-    selectionRect->setZValue(1.0);
-    */
 }
 
 void CanvasView::onItemUnselected(QGraphicsItem* item) {
     if (!item->isSelected())
         return;
     item->setSelected(false);
-    for (auto item : item->childItems())
-        delete item;
 }

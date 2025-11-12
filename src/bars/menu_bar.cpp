@@ -1,4 +1,5 @@
 #include "menu_bar.hpp"
+
 #include <QMenu>
 
 MenuBar::MenuBar(QWidget* parent)

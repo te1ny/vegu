@@ -1,11 +1,13 @@
 #include "action_manager.hpp"
-#include <functional>
 
 const std::string NO_ACTION = "No action";
 
-ActionManager& ActionManager::instance() {
-    static ActionManager obj{};
-    return obj;
+ActionManager& ActionManager::instance(QWidget* parent) {
+    static ActionManager* obj = new ActionManager();
+    if (obj->parent() == nullptr) {
+        obj->setParent(parent);
+    }
+    return *obj;
 }
 
 void ActionManager::add(const std::string& undoName, 
@@ -15,6 +17,7 @@ void ActionManager::add(const std::string& undoName,
 {
     mUndo.emplace(undoName, redoName, std::move(undo), std::move(redo));
     mRedo = std::stack<Action>();
+    setFocus();
 }
 
 const std::string& ActionManager::getUndoName() const {
@@ -77,8 +80,5 @@ ActionManager::ActionManager(QWidget* parent)
     , mUndo()
     , mRedo() 
 {
-}
-
-ActionManager::~ActionManager()
-{
+    setFocusPolicy(Qt::StrongFocus);
 }

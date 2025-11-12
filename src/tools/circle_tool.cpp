@@ -1,6 +1,7 @@
 #include "circle_tool.hpp"
 
 #include "../canvas/canvas_view.hpp"
+#include "../action_manager/action_manager.hpp"
 
 QRectF toSquare(const QRectF& rect, const QPointF& start, const QPointF& end);
     
@@ -28,6 +29,15 @@ void CircleTool::mouseReleaseEvent(QMouseEvent* event) {
         return;
     auto lastPosition = mCanvasView->mapToScene(event->position().toPoint());
     mItem->setRect(toSquare(QRectF(mStartPosition, lastPosition).normalized(), mStartPosition, lastPosition));
+    ActionManager::instance().add("Remove Circle", "Place Circle",
+            [item = mItem](){
+                item->hide();
+                item->setFlag(QGraphicsItem::ItemIsSelectable, false);
+            },
+            [item = mItem](){
+                item->show();
+                item->setFlag(QGraphicsItem::ItemIsSelectable, true);
+            });
     mItem = nullptr;
 }
 

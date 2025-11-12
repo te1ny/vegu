@@ -17,7 +17,7 @@ class ActionManager : QWidget {
     };
 
 public:
-    static ActionManager& instance();
+    static ActionManager& instance(QWidget* parent = nullptr);
 
     void add(const std::string& undoName, 
              const std::string& redoName, 
@@ -27,7 +27,6 @@ public:
     const std::string& getUndoName() const;
     const std::string& getRedoName() const;
 
-protected:
     void keyPressEvent(QKeyEvent* event) override;
 
 private:
@@ -38,7 +37,7 @@ private:
     std::stack<Action> mRedo;
 
     ActionManager(QWidget* parent = nullptr);
-    ~ActionManager();
+    ~ActionManager() = default;
 };
 
 #endif // ACTION_MANAGER_HPP

@@ -1,8 +1,9 @@
 #include "selection_tool.hpp"
 
-#include <QRect>
-
 #include "../canvas/canvas_view.hpp"
+
+#include <QRect>
+#include <QGraphicsItem>
 
 void SelectionTool::mousePressEvent(QMouseEvent* event) {
     if (event->button() != Qt::LeftButton || mRubberBand)
