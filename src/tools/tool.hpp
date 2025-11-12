@@ -31,7 +31,7 @@ public:
 
     virtual void setCanvasView(CanvasView* canvasView);
 
-    Tool(const QString& name);
+    Tool(const QString& name); // name is not need to store now
     virtual ~Tool() = default;
 
 protected:

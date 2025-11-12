@@ -34,6 +34,10 @@ void Tool::setCanvasView(CanvasView* canvasView) {
     mCanvasView = canvasView;
 }
 
-Tool::Tool(const QString& name) {
+Tool::Tool(const QString& name)
+    : mPenis()
+    , mBrush(QColor(0, 0, 0, 0))
+    , mCanvasView(nullptr)
+{
     mAction = new QAction(QIcon("src/tools/icons/" + name.toLower() + "_tool.svg"), name);
 }

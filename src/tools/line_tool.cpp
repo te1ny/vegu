@@ -7,6 +7,8 @@ void LineTool::mousePressEvent(QMouseEvent* event) {
         return;
     mStartPosition = mCanvasView->mapToScene(event->position().toPoint());
     mItem = new QGraphicsLineItem(QLineF(mStartPosition, mStartPosition));
+    mItem->setCacheMode(QGraphicsItem::NoCache);
+    mItem->setPen(mPenis);
     mItem->setFlag(QGraphicsItem::ItemIsSelectable, true);
     mCanvasView->scene()->addItem(mItem);
 }

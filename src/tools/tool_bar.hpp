@@ -5,6 +5,7 @@
 #include <QAction>
 #include <QString>
 #include <QMap>
+#include <QColorDialog>
 
 #include "tool.hpp"
 
@@ -26,6 +27,8 @@ private:
     void addTool(const QString& toolName);
 
     QMap<QString, Tool*> mTools;
+    QColorDialog* mStrokeColorSettings;
+    QColorDialog* mFillColorSettings;
 };
 
 #endif // TOOL_BAR_HPP

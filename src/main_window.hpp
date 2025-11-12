@@ -6,6 +6,8 @@
 class ToolBar;
 class Canvas;
 class CanvasView;
+class MenuBar;
+class CanvasLoader;
 
 namespace Ui {
     class MainWindow;
@@ -16,10 +18,16 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
+public slots:
+    void onSave();
+    void onLoad();
+
 private:
     ToolBar* mToolBar; 
     Canvas* mCanvas;
     CanvasView* mCanvasView;
+    MenuBar* mMenuBar;
+    CanvasLoader* mCanvasLoader;
 
     Ui::MainWindow* mUi;
 };

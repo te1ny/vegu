@@ -1,14 +1,15 @@
 #include "canvas_view.hpp"
 
 #include <QRubberBand>
-#include <qdebug.h>
-#include <qlogging.h>
+#include <qbrush.h>
+#include <qnamespace.h>
 
 #include "canvas.hpp"
 #include "../tools/tool.hpp"
 
 void CanvasView::setCanvas(Canvas* canvas) {
     setScene(canvas);
+    scene()->setSceneRect(0, 0, 1000, 1000);
 }
 
 void CanvasView::mousePressEvent(QMouseEvent* event) {
@@ -32,15 +33,47 @@ void CanvasView::mouseReleaseEvent(QMouseEvent* event) {
         QGraphicsView::mouseReleaseEvent(event);
 }
 
+void CanvasView::wheelEvent(QWheelEvent* event) {
+    if (event->modifiers() & Qt::ControlModifier) {
+        const double factor = 1.1;
+        
+        QPointF delta = event->angleDelta();
+        if (delta.y() == 0) {
+            event->ignore();
+            return;
+        }
+        bool zoomIn = (delta.y() > 0);
+        double scaleFactor = zoomIn ? factor : 1.0 / factor;
+        
+        QPointF mouseViewportPos = event->position();
+        QPointF mouseScenePosBefore = mapToScene(mouseViewportPos.toPoint());
+        
+        setTransformationAnchor(QGraphicsView::NoAnchor);
+        scale(scaleFactor, scaleFactor);
+        
+        QPointF mouseScenePosAfter = mapToScene(mouseViewportPos.toPoint());
+        QPointF diff = mouseScenePosAfter - mouseScenePosBefore;
+        
+        translate(diff.x(), diff.y());
+        
+        centerOn(mouseScenePosBefore);
+        
+        event->accept();
+    } else {
+        QGraphicsView::wheelEvent(event);
+    }
+}
+
+void CanvasView::drawBackground(QPainter* painter, const QRectF& rect) {
+    painter->fillRect(rect, QBrush(Qt::lightGray));
+    painter->setClipRect(sceneRect() & rect);
+    painter->fillRect(sceneRect(), Qt::white);
+}
+
 CanvasView::CanvasView(QWidget* parent)
     : QGraphicsView(parent)
     , mTool(nullptr)
 {
-    //setDragMode(NoDrag);
-    //setResizeAnchor(NoAnchor);
-    //setTransformationAnchor(NoAnchor);
-    setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    setSceneRect(0, 0, 2000, 2000);
 }
 
 void CanvasView::onToolChanged(Tool* tool) {
@@ -51,6 +84,7 @@ void CanvasView::onItemSelected(QGraphicsItem* item) {
     if (item->isSelected())
         return;
     item->setSelected(true);
+    /*
     QGraphicsRectItem* selectionRect = new QGraphicsRectItem(item);
     selectionRect->setRect(item->boundingRect());
     
@@ -59,6 +93,7 @@ void CanvasView::onItemSelected(QGraphicsItem* item) {
     selectionRect->setBrush(Qt::NoBrush);
     selectionRect->setFlag(QGraphicsItem::ItemIsSelectable, false);
     selectionRect->setZValue(1.0);
+    */
 }
 
 void CanvasView::onItemUnselected(QGraphicsItem* item) {

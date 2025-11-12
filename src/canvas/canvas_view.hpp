@@ -3,6 +3,7 @@
 
 #include <QGraphicsView>
 #include <QMouseEvent>
+#include <QWheelEvent>
 
 class Canvas;
 class Tool;
@@ -16,6 +17,8 @@ public:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
+    void drawBackground(QPainter* painter, const QRectF& rect) override;
 
     CanvasView(QWidget* parent = nullptr);
 

@@ -9,6 +9,9 @@ void CircleTool::mousePressEvent(QMouseEvent* event) {
         return;
     mStartPosition = mCanvasView->mapToScene(event->position().toPoint());
     mItem = new QGraphicsEllipseItem(QRectF(mStartPosition, mStartPosition).normalized());
+    mItem->setCacheMode(QGraphicsItem::NoCache);
+    mItem->setPen(mPenis);
+    mItem->setBrush(mBrush);
     mItem->setFlag(QGraphicsItem::ItemIsSelectable, true);
     mCanvasView->scene()->addItem(mItem);
 }
